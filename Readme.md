@@ -1,6 +1,6 @@
 # Проект «Киноман»
 
-* Студент: [Вячеслав Николаев](https://up.htmlacademy.ru/ecmascript/17/user/64906).
+* Студент: [Вячеслав Николаев](https://htmlacademy.ru/profile/slavka_piyavka).
 * Наставник: [Артём Рудов](https://htmlacademy.ru/profile/artrudov).
 
 ---
