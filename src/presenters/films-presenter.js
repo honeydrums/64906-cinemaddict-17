@@ -11,39 +11,39 @@ export default class FilmsPresenter {
   FILMS_MOCK_COUNT = 5;
   EXTRA_FILMS_COUNT = 2;
 
-  filmsWrapper = new FilmsWrapperView();
+  filmsWrapperComponent = new FilmsWrapperView();
 
   filmsListComponent = new FilmsListView();
-  filmsListContainer = new FilmsListContainerView();
+  filmsListComponentContainer = new FilmsListContainerView();
 
   topRatedComponent = new TopRatedFilmsView();
-  topRatedContainer = new FilmsListContainerView();
+  topRatedComponentContainer = new FilmsListContainerView();
 
   mostCommentedComponent = new MostCommentedFilmsView();
-  mostCommentedContainer = new FilmsListContainerView();
+  mostCommentedComponentContainer = new FilmsListContainerView();
 
   init = (mainContainer) => {
     this.mainContainer = mainContainer;
 
-    render(this.filmsWrapper, mainContainer);
+    render(this.filmsWrapperComponent, mainContainer);
 
-    render(this.filmsListComponent, this.filmsWrapper.getElement());
-    render(this.filmsListContainer, this.filmsListComponent.getElement());
+    render(this.filmsListComponent, this.filmsWrapperComponent.getElement());
+    render(this.filmsListComponentContainer, this.filmsListComponent.getElement());
     for(let i = 0; i < this.FILMS_MOCK_COUNT; i++) {
-      render(new FilmCardView(), this.filmsListContainer.getElement());
+      render(new FilmCardView(), this.filmsListComponentContainer.getElement());
     }
     render(new ShowMoreButtonView(), this.filmsListComponent.getElement());
 
-    render(this.topRatedComponent, this.filmsWrapper.getElement());
-    render(this.topRatedContainer, this.topRatedComponent.getElement());
+    render(this.topRatedComponent, this.filmsWrapperComponent.getElement());
+    render(this.topRatedComponentContainer, this.topRatedComponent.getElement());
     for(let i = 0; i < this.EXTRA_FILMS_COUNT; i++) {
-      render(new FilmCardView(), this.topRatedContainer.getElement());
+      render(new FilmCardView(), this.topRatedComponentContainer.getElement());
     }
 
-    render(this.mostCommentedComponent, this.filmsWrapper.getElement());
-    render(this.mostCommentedContainer, this.mostCommentedComponent.getElement());
+    render(this.mostCommentedComponent, this.filmsWrapperComponent.getElement());
+    render(this.mostCommentedComponentContainer, this.mostCommentedComponent.getElement());
     for(let i = 0; i < this.EXTRA_FILMS_COUNT; i++) {
-      render(new FilmCardView(), this.mostCommentedContainer.getElement());
+      render(new FilmCardView(), this.mostCommentedComponentContainer.getElement());
     }
   };
 }
