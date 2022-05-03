@@ -1,3 +1,10 @@
+import { getRandomInteger } from '../utils.js';
+
+const getRandomElement = (values) => {
+  const randomIndex = getRandomInteger(0, values.length - 1);
+  return values[randomIndex];
+};
+
 const commentEmotions = ['smile', 'sleeping', 'puke', 'angry'];
 const posters = ['made-for-each-other.png', 'popeye-meets-sinbad.png', 'sagebrush-trail.jpg'];
 const titles = ['the great flamarion', 'the dance of life', 'the man with the golden arm'];
@@ -14,22 +21,22 @@ const comments = [
     author: 'Ilya O\'Reilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: commentEmotions[0],
+    emotion: getRandomElement(commentEmotions),
   },
   {
     id: 2,
     author: 'Thomas',
     comment: 'boooooring',
     date: '2020-05-11T16:12:32.554Z',
-    emotion: commentEmotions[1],
+    emotion: getRandomElement(commentEmotions),
   },
 ];
 
 export const generateMovie = () => ({
   id: 0,
   filmInfo: {
-    poster: `images/posters/${posters[1]}`,
-    title: titles[1],
+    poster: `images/posters/${getRandomElement(posters)}`,
+    title: getRandomElement(titles),
     alternativeTitle: 'Laziness Who Sold Themselves',
     totalRating: 5.3,
     director: 'Tom Ford',
@@ -47,10 +54,10 @@ export const generateMovie = () => ({
     genre: [
       'Comedy',
     ],
-    description: descriptions[1],
+    description: getRandomElement(descriptions),
     ageRating: 0,
   },
-  comments: comments[1],
+  comments: getRandomElement(comments),
   userDetails: {
     watchlist: false,
     alreadyWatched: true,
