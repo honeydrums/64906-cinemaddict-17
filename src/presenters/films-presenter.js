@@ -36,16 +36,16 @@ export default class FilmsPresenter {
     }
     render(new ShowMoreButtonView(), this.filmsListComponent.getElement());
 
-    // render(this.topRatedComponent, this.filmsWrapperComponent.getElement());
-    // render(this.topRatedComponentContainer, this.topRatedComponent.getElement());
-    // for(let i = 0; i < this.EXTRA_FILMS_COUNT; i++) {
-    //   render(new FilmCardView(), this.topRatedComponentContainer.getElement());
-    // }
-    //
-    // render(this.mostCommentedComponent, this.filmsWrapperComponent.getElement());
-    // render(this.mostCommentedComponentContainer, this.mostCommentedComponent.getElement());
-    // for(let i = 0; i < this.EXTRA_FILMS_COUNT; i++) {
-    //   render(new FilmCardView(), this.mostCommentedComponentContainer.getElement());
-    // }
+    render(this.topRatedComponent, this.filmsWrapperComponent.getElement());
+    render(this.topRatedComponentContainer, this.topRatedComponent.getElement());
+    for(let i = 0; i < this.EXTRA_FILMS_COUNT; i++) {
+      render(new FilmCardView(this.moviesList[i]), this.topRatedComponentContainer.getElement());
+    }
+
+    render(this.mostCommentedComponent, this.filmsWrapperComponent.getElement());
+    render(this.mostCommentedComponentContainer, this.mostCommentedComponent.getElement());
+    for(let i = 0; i < this.EXTRA_FILMS_COUNT; i++) {
+      render(new FilmCardView(this.moviesList[i]), this.mostCommentedComponentContainer.getElement());
+    }
   };
 }
