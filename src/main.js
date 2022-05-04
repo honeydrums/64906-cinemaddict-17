@@ -1,10 +1,10 @@
+import { render } from './render.js';
 import ProfileView from './view/profile-view.js';
 import FooterStatisticsView from './view/footer-statistics-view.js';
-import NavigationView from './view/navigation-view';
-import SortView from './view/sort-view';
+import NavigationView from './view/navigation-view.js';
+import SortView from './view/sort-view.js';
 import FilmsPresenter from './presenters/films-presenter.js';
-import { render } from './render.js';
-import PopupView from './view/popup-view';
+import PopupView from './view/popup-view.js';
 
 const pageBody = document.querySelector('.footer');
 const headerElement = document.querySelector('.header');
