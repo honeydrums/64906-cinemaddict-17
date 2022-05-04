@@ -1,7 +1,9 @@
-import { createElement } from '../render.js';
+import {createElement} from '../render.js';
 
-const createFilmCardTemplate = () => (
-  `<article class="film-card">
+const createFilmCardTemplate = (movie) => {
+  console.log(movie);
+  return (
+    `<article class="film-card">
     <a class="film-card__link">
       <h3 class="film-card__title">Sagebrush Trail</h3>
       <p class="film-card__rating">3.2</p>
@@ -20,11 +22,16 @@ const createFilmCardTemplate = () => (
       <button class="film-card__controls-item film-card__controls-item--favorite" type="button">Mark as favorite</button>
     </div>
    </article>`
-);
+  );
+};
 
 export default class FilmCardView {
+  constructor(movie) {
+    this.movie = movie;
+  }
+
   getTemplate() {
-    return createFilmCardTemplate();
+    return createFilmCardTemplate(this.movie);
   }
 
   getElement() {
