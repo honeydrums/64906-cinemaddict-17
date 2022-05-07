@@ -1,88 +1,74 @@
-import { getRandomInteger } from '../utils.js';
-
-const getRandomElement = (values) => {
-  const randomIndex = getRandomInteger(0, values.length - 1);
-  return values[randomIndex];
-};
-
-const commentEmotions = ['smile', 'sleeping', 'puke', 'angry'];
-const posters = ['made-for-each-other.png', 'popeye-meets-sinbad.png', 'sagebrush-trail.jpg'];
-const titles = ['the great flamarion', 'the dance of life', 'the man with the golden arm'];
-const descriptions = [
-  'Lorem ipsum dolor sit. Nunc fermentum tortor ac porta dapibus.',
+const EMOTIONS = ['angry', 'puke', 'sleeping', 'smile'];
+const POSTERS = [
+  'made-for-each-other.png',
+  'popeye-meets-sinbad.png',
+  'sagebrush-trail.jpg',
+  'santa-claus-conquers-the-martians.jpg',
+  'the-dance-of-life.jpg',
+  'the-great-flamarion.jpg',
+  'the-man-with-the-golden-arm.jpg',
+];
+const TITLES = [
+  'The Great Flamarion',
+  'The Dance of Life',
+  'The Man with the Golden Arm',
+];
+const ALTERNATIVE_TITLES = [
+  'All time classic',
+  'Released thru FILM CLASSICS',
+  'A Lone Star Western',
+  'Great With A Gun',
+  'It\'s classic Al Capone.',
+  'Glamorous! Gorgeous! Heart Breaking!',
+];
+const DIRECTORS = [
+  'John Cromwell',
+  'Otto Preminger',
+  'Max Fleischer',
+  'Armand Schaefer',
+  'Anthony Mann',
+];
+const WRITERS = [
+  'Joe Swerling',
+  'Adolph Zukor',
+  'Lindsley Parsons',
+  'Anne Wiston',
+  'Benjamin Glazer',
+];
+const ACTORS = [
+  'James Stewart',
+  'Carole Lombard',
+  'Charles Coburn',
+  'Frank Sinatra',
+  'Eleanor Parker',
+  'Kim Novak',
+  'Erich Von Stroheim',
+  'Mary Beth Hughes',
+  'Hal Skelly',
+  'Nancy Carroll',
+];
+const COUNTRIES = [
+  'Finland',
+  'USA',
+  'Canada',
+  'French',
+  'Germany',
+  'Australia',
+];
+const GENRES = [
+  'Comedy',
+  'Drama',
+  'Cartoon',
+  'Thriller',
+  'Western',
+  'Musical',
+  'Detective',
+];
+const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-  'Aliquam erat volutpat. In rutrum ac purus sit amet tempus.',
-  'Nunc fermentum tortor ac porta dapibus.',
-  'In rutrum ac purus sit amet tempus.',
+  'Amet autem fuga tempore!',
+  'Amet distinctio error esse hic illum modi nobis nostrum officia perferendis quam quos rem repellat, sapiente ullam voluptates?',
+  'Beatae delectus incidunt magnam magni perferendis praesentium quas sequi sint?',
+  'Accusantium alias assumenda atque autem beatae commodi cumque eaque harum hic id illo laboriosam molestias nam nostrum numquam odio odit pariatur placeat possimus quaerat quam quasi quia quis quo reiciendis, rem repellendus reprehenderit sint sunt tenetur totam veniam voluptates voluptatum.',
 ];
-const comments = [
-  {
-    id: 1,
-    author: 'Ilya O\'Reilly',
-    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
-    date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomElement(commentEmotions),
-  },
-  {
-    id: 2,
-    author: 'Thomas',
-    comment: 'boooooring',
-    date: '2020-05-11T16:12:32.554Z',
-    emotion: getRandomElement(commentEmotions),
-  },
-  {
-    id: 3,
-    author: 'Helena',
-    comment: 'hello',
-    date: '2020-05-11T16:12:32.554Z',
-    emotion: getRandomElement(commentEmotions),
-  },
-  {
-    id: 4,
-    author: 'Oleg',
-    comment: 'kek',
-    date: '2020-05-11T16:12:32.554Z',
-    emotion: getRandomElement(commentEmotions),
-  },
-  {
-    id: 5,
-    author: 'Anastasia',
-    comment: 'lol',
-    date: '2020-05-11T16:12:32.554Z',
-    emotion: getRandomElement(commentEmotions),
-  },
-];
-
-export const generateMovie = () => ({
-  id: 0,
-  filmInfo: {
-    poster: `${getRandomElement(posters)}`,
-    title: getRandomElement(titles),
-    alternativeTitle: 'Laziness Who Sold Themselves',
-    totalRating: getRandomInteger(1, 10) * 0.9,
-    director: 'Tom Ford',
-    writers: [
-      'Takeshi Kitano',
-    ],
-    actors: [
-      'Morgan Freeman',
-    ],
-    release: {
-      date: '2019-05-11T00:00:00.000Z',
-      releaseCountry: 'Finland',
-    },
-    runtime: 77,
-    genres: [
-      'Comedy',
-    ],
-    description: getRandomElement(descriptions),
-    ageRating: 0,
-  },
-  comments: comments.slice(0, getRandomInteger(0, comments.length)),
-  userDetails: {
-    watchlist: Boolean(getRandomInteger(0, 1)),
-    alreadyWatched: Boolean(getRandomInteger(0, 1)),
-    watchingDate: '2019-04-12T16:12:32.554Z',
-    favorite: Boolean(getRandomInteger(0, 1)),
-  },
-});
+const AGE_RATINGS = ['6+', '12+', '14+', '16+', '18+'];
