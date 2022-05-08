@@ -20,4 +20,12 @@ const getSeveralRandomArrayElems = (array) => {
 
 const getRandomBoolean = () => Boolean(getRandomInteger(0, 1));
 
-export { getRandomInteger, generateId, getOneRandomArrayElem, getSeveralRandomArrayElems, getRandomBoolean };
+const generateRandomDate = () => new Date(
+  getRandomInteger(1900, 2020),
+  getRandomInteger(1, 12),
+  getRandomInteger(1, 28),
+  getRandomInteger(1, 23),
+  getRandomInteger(1, 59)
+);
+
+export { getRandomInteger, generateId, getOneRandomArrayElem, getSeveralRandomArrayElems, getRandomBoolean, generateRandomDate };

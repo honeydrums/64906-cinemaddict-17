@@ -1,9 +1,11 @@
+import dayjs from 'dayjs';
 import {
   getRandomInteger,
   generateId,
   getOneRandomArrayElem,
   getSeveralRandomArrayElems,
-  getRandomBoolean
+  getRandomBoolean,
+  generateRandomDate
 } from '../utils.js';
 
 const MIN_MOVIE_SCORE = 1;
@@ -94,8 +96,8 @@ const generateMovieId = generateId();
 const generateCommentsId = generateId();
 const generateMovieRating = () => getRandomInteger(MIN_MOVIE_SCORE, MAX_MOVIE_SCORE) * MOVIE_RATING_DECIMAL;
 const generateMovieRuntime = () => getRandomInteger(MIN_MOVIE_RUNTIME, MAX_MOVIE_RUNTIME);
-
-const newDate = new Date(1977, 2, 1, 1, 10);
+const generateMovieReleaseDate = () => dayjs(generateRandomDate()).format('DD MMMM YYYY');
+const generateWatchingDate = () => dayjs(generateRandomDate()).format('YYYY/MMMM/DD HH:mm');
 
 export const generateMovie = () => ({
   id: generateMovieId(),
@@ -108,7 +110,7 @@ export const generateMovie = () => ({
     writers: getSeveralRandomArrayElems(WRITERS),
     actors: getSeveralRandomArrayElems(ACTORS),
     release: {
-      date: newDate,
+      date: generateMovieReleaseDate(),
       releaseCountry: getOneRandomArrayElem(COUNTRIES),
     },
     runtime: generateMovieRuntime(),
@@ -120,7 +122,7 @@ export const generateMovie = () => ({
   userDetails: {
     watchlist: getRandomBoolean(),
     alreadyWatched: getRandomBoolean(),
-    watchingDate: newDate,
+    watchingDate: generateWatchingDate(),
     favorite: getRandomBoolean(),
   },
 });
