@@ -25,6 +25,12 @@ export default class FilmsPresenter {
   #mostCommentedComponent = new MostCommentedFilmsView();
   #mostCommentedComponentContainer = new FilmsListContainerView();
 
+  #renderMovie = (movie) => {
+    const movieComponent = new FilmCardView(movie);
+
+    render(movieComponent, this.#filmsListComponentContainer.element);
+  };
+
   init = (mainContainer, moviesModel) => {
     this.#mainContainer = mainContainer;
     this.#moviesModel = moviesModel;
@@ -35,7 +41,7 @@ export default class FilmsPresenter {
     render(this.#filmsListComponent, this.#filmsWrapperComponent.element);
     render(this.#filmsListComponentContainer, this.#filmsListComponent.element);
     for(let i = 0; i < this.#moviesList.length; i++) {
-      render(new FilmCardView(this.#moviesList[i]), this.#filmsListComponentContainer.element);
+      this.#renderMovie(this.#moviesList[i]);
     }
     render(new ShowMoreButtonView(), this.#filmsListComponent.element);
 
