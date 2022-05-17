@@ -5,7 +5,8 @@ import {
   getOneRandomArrayElem,
   getSeveralRandomArrayElems,
   getRandomBoolean,
-  generateRandomDate
+  generateRandomDate,
+  humanizeRuntime
 } from '../utils.js';
 
 const MIN_MOVIE_SCORE = 1;
@@ -95,7 +96,7 @@ const AGE_RATINGS = ['6+', '12+', '14+', '16+', '18+'];
 const generateMovieId = generateId();
 const generateCommentsId = generateId();
 const generateMovieRating = () => getRandomInteger(MIN_MOVIE_SCORE, MAX_MOVIE_SCORE) * MOVIE_RATING_DECIMAL;
-const generateMovieRuntime = () => getRandomInteger(MIN_MOVIE_RUNTIME, MAX_MOVIE_RUNTIME);
+const generateMovieRuntime = () => humanizeRuntime(getRandomInteger(MIN_MOVIE_RUNTIME, MAX_MOVIE_RUNTIME));
 const generateMovieReleaseDate = () => dayjs(generateRandomDate()).format('DD MMMM YYYY');
 const generateWatchingDate = () => dayjs(generateRandomDate()).format('YYYY/MMMM/DD HH:mm');
 

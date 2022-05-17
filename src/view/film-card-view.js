@@ -13,7 +13,7 @@ const createFilmCardTemplate = (movie) => {
       <p class="film-card__rating">${filmInfo.totalRating}</p>
       <p class="film-card__info">
         <span class="film-card__year">${filmInfo.release.date}</span>
-        <span class="film-card__duration">${filmInfo.runtime}m</span>
+        <span class="film-card__duration">${filmInfo.runtime}</span>
         <span class="film-card__genre">${filmInfo.genres.join(', ')}</span>
       </p>
       <img src="./images/posters/${filmInfo.poster}" alt="" class="film-card__poster">
@@ -30,23 +30,26 @@ const createFilmCardTemplate = (movie) => {
 };
 
 export default class FilmCardView {
+  #movie = null;
+  #element = null;
+
   constructor(movie) {
-    this.movie = movie;
+    this.#movie = movie;
   }
 
-  getTemplate() {
-    return createFilmCardTemplate(this.movie);
+  get template() {
+    return createFilmCardTemplate(this.#movie);
   }
 
-  getElement() {
-    if(!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if(!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

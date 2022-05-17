@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [Вячеслав Николаев](https://htmlacademy.ru/profile/slavka_piyavka).
-* Наставник: [Сергей Карпов](https://htmlacademy.ru/profile/id518893).
+* Наставник: [Кирилл Чистяков](https://htmlacademy.ru/profile/id149394).
 
 ---
 
