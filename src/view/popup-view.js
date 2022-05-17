@@ -2,9 +2,15 @@ import { createElement } from '../render.js';
 
 const createPopupTemplate = (movie) => {
   const {filmInfo, comments, userDetails} = movie;
-  const renderGenre = (genres) => genres.forEach((genre) => genre);
-
-  const kek = renderGenre(filmInfo.genres);
+  const renderGenresList = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
+  const renderGenres = renderGenresList(filmInfo.genres);
+  const renderGenresTemplate = (genres) => (
+    `<td class="film-details__term">${ genres.length > 1 ? 'Genres' : 'Genre' }</td>
+     <td class="film-details__cell">
+       ${renderGenres}
+     </td>`
+  );
+  const getGenres = renderGenresTemplate(filmInfo.genres);
 
   return (
     `<section class="film-details">
@@ -58,10 +64,7 @@ const createPopupTemplate = (movie) => {
                     <td class="film-details__cell">${filmInfo.release.releaseCountry}</td>
                   </tr>
                   <tr class="film-details__row">
-                    <td class="film-details__term">Genres</td>
-                    <td class="film-details__cell">
-                        ${kek}
-                    </td>
+                    ${getGenres}
                   </tr>
                 </table>
 
