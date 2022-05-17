@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -28,4 +32,22 @@ const generateRandomDate = () => new Date(
   getRandomInteger(1, 59)
 );
 
-export { getRandomInteger, generateId, getOneRandomArrayElem, getSeveralRandomArrayElems, getRandomBoolean, generateRandomDate };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const humanizeRuntime = (runtime) => {
+  dayjs.extend(duration);
+  dayjs.extend(relativeTime);
+  const durationTime = dayjs.duration(runtime, 'minutes').$d;
+  return `${durationTime.hours}h ${durationTime.minutes}m`;
+};
+
+export {
+  getRandomInteger,
+  generateId,
+  getOneRandomArrayElem,
+  getSeveralRandomArrayElems,
+  getRandomBoolean,
+  generateRandomDate,
+  isEscapeKey,
+  humanizeRuntime,
+};
