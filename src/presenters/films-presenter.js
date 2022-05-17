@@ -1,4 +1,5 @@
-import {render} from '../render.js';
+import { render } from '../render.js';
+import { isEscapeKey } from '../utils.js';
 import FilmsWrapperView from '../view/films-wrapper-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import FilmsListView from '../view/films-list-view.js';
@@ -6,6 +7,7 @@ import FilmsListContainerView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import TopRatedFilmsView from '../view/top-rated-films-view';
 import MostCommentedFilmsView from '../view/most-commented-films-view';
+import PopupView from '../view/popup-view';
 
 export default class FilmsPresenter {
   #EXTRA_FILMS_COUNT = 2;
@@ -26,7 +28,32 @@ export default class FilmsPresenter {
   #mostCommentedComponentContainer = new FilmsListContainerView();
 
   #renderMovie = (movie) => {
+    const pageBody = document.body;
     const movieComponent = new FilmCardView(movie);
+    const moviePopupComponent = new PopupView(movie);
+
+    const onMovieCardClick = (evt) => {
+      evt.preventDefault();
+      pageBody.classList.add('hide-overflow');
+      pageBody.appendChild(moviePopupComponent.element);
+      document.addEventListener('keydown', closeFromKeyboardHandler);
+    };
+
+    const onClosePopupClick = () => {
+      pageBody.removeAttribute('class');
+      pageBody.removeChild(moviePopupComponent.element);
+      document.removeEventListener('keydown', closeFromKeyboardHandler);
+    };
+
+    function closeFromKeyboardHandler(evt) {
+      if(isEscapeKey(evt)) {
+        evt.preventDefault();
+        onClosePopupClick();
+      }
+    }
+
+    movieComponent.element.querySelector('.film-card__link').addEventListener('click', onMovieCardClick);
+    moviePopupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', onClosePopupClick);
 
     render(movieComponent, this.#filmsListComponentContainer.element);
   };
