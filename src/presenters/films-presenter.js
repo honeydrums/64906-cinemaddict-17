@@ -9,12 +9,15 @@ import TopRatedFilmsView from '../view/top-rated-films-view';
 import MostCommentedFilmsView from '../view/most-commented-films-view';
 import PopupView from '../view/popup-view';
 
+const MOVIES_CHUNK_COUNT = 5;
+
 export default class FilmsPresenter {
   #EXTRA_FILMS_COUNT = 2;
 
   #mainContainer = null;
   #moviesModel = null;
   #moviesList = null;
+  #renderedMoviesCount = MOVIES_CHUNK_COUNT;
 
   #filmsWrapperComponent = new FilmsWrapperView();
 
@@ -28,6 +31,8 @@ export default class FilmsPresenter {
   #mostCommentedComponentContainer = new FilmsListContainerView();
 
   #isPopupOpen = false;
+
+  #showMoreButtonComponent = new ShowMoreButtonView();
 
   #renderMovie = (movie) => {
     const pageBody = document.body;
@@ -66,6 +71,19 @@ export default class FilmsPresenter {
     render(movieComponent, this.#filmsListComponentContainer.element);
   };
 
+  #showMoreMovies = () => {
+    this.#moviesList
+      .slice(this.#renderedMoviesCount, this.#renderedMoviesCount + MOVIES_CHUNK_COUNT)
+      .forEach((movie) => this.#renderMovie(movie));
+
+    this.#renderedMoviesCount += MOVIES_CHUNK_COUNT;
+
+    if(this.#renderedMoviesCount >= this.#moviesList.length) {
+      this.#showMoreButtonComponent.element.remove();
+      this.#showMoreButtonComponent.removeElement();
+    }
+  };
+
   init = (mainContainer, moviesModel) => {
     this.#mainContainer = mainContainer;
     this.#moviesModel = moviesModel;
@@ -75,10 +93,15 @@ export default class FilmsPresenter {
 
     render(this.#filmsListComponent, this.#filmsWrapperComponent.element);
     render(this.#filmsListComponentContainer, this.#filmsListComponent.element);
-    for(let i = 0; i < this.#moviesList.length; i++) {
+    for(let i = 0; i < Math.min(this.#moviesList.length, MOVIES_CHUNK_COUNT); i++) {
       this.#renderMovie(this.#moviesList[i]);
     }
-    render(new ShowMoreButtonView(), this.#filmsListComponent.element);
+
+    if(this.#moviesList.length > MOVIES_CHUNK_COUNT) {
+      render(this.#showMoreButtonComponent, this.#filmsListComponent.element);
+
+      this.#showMoreButtonComponent.element.addEventListener('click', this.#showMoreMovies);
+    }
 
     render(this.#topRatedComponent, this.#filmsWrapperComponent.element);
     render(this.#topRatedComponentContainer, this.#topRatedComponent.element);
