@@ -27,6 +27,8 @@ export default class FilmsPresenter {
   #mostCommentedComponent = new MostCommentedFilmsView();
   #mostCommentedComponentContainer = new FilmsListContainerView();
 
+  #isPopupOpen = false;
+
   #renderMovie = (movie) => {
     const pageBody = document.body;
     const movieComponent = new FilmCardView(movie);
@@ -34,12 +36,18 @@ export default class FilmsPresenter {
 
     const onMovieCardClick = (evt) => {
       evt.preventDefault();
+      if(this.#isPopupOpen) {
+        document.querySelector('.film-details').remove();
+      } else {
+        this.#isPopupOpen = true;
+      }
       pageBody.classList.add('hide-overflow');
       pageBody.appendChild(moviePopupComponent.element);
       document.addEventListener('keydown', closeFromKeyboardHandler);
     };
 
     const onClosePopupClick = () => {
+      this.#isPopupOpen = false;
       pageBody.removeAttribute('class');
       pageBody.removeChild(moviePopupComponent.element);
       document.removeEventListener('keydown', closeFromKeyboardHandler);
