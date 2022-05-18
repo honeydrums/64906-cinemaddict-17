@@ -8,6 +8,7 @@ import FilmCardView from '../view/film-card-view.js';
 import TopRatedFilmsView from '../view/top-rated-films-view';
 import MostCommentedFilmsView from '../view/most-commented-films-view';
 import PopupView from '../view/popup-view';
+import EmptyListView from '../view/empty-list-view';
 
 const MOVIES_CHUNK_COUNT = 5;
 
@@ -93,6 +94,11 @@ export default class FilmsPresenter {
 
     render(this.#filmsListComponent, this.#filmsWrapperComponent.element);
     render(this.#filmsListComponentContainer, this.#filmsListComponent.element);
+
+    if(this.#moviesList.length < 1) {
+      return render(new EmptyListView(), this.#filmsListComponentContainer.element);
+    }
+
     for(let i = 0; i < Math.min(this.#moviesList.length, MOVIES_CHUNK_COUNT); i++) {
       this.#renderMovie(this.#moviesList[i]);
     }
