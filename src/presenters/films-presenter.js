@@ -1,4 +1,4 @@
-import { render } from '../render.js';
+import { render,remove } from '../framework/render.js';
 import { isEscapeKey } from '../utils.js';
 import FilmsWrapperView from '../view/films-wrapper-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
@@ -40,8 +40,7 @@ export default class FilmsPresenter {
     const movieComponent = new FilmCardView(movie);
     const moviePopupComponent = new PopupView(movie);
 
-    const onMovieCardClick = (evt) => {
-      evt.preventDefault();
+    const onMovieCardClick = () => {
       if(this.#isPopupOpen) {
         document.querySelector('.film-details').remove();
       } else {
@@ -55,7 +54,7 @@ export default class FilmsPresenter {
     const onClosePopupClick = () => {
       this.#isPopupOpen = false;
       pageBody.removeAttribute('class');
-      pageBody.removeChild(moviePopupComponent.element);
+      remove(moviePopupComponent);
       document.removeEventListener('keydown', closeFromKeyboardHandler);
     };
 
@@ -66,8 +65,8 @@ export default class FilmsPresenter {
       }
     }
 
-    movieComponent.element.querySelector('.film-card__link').addEventListener('click', onMovieCardClick);
-    moviePopupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', onClosePopupClick);
+    movieComponent.setMovieCardHandler(onMovieCardClick);
+    moviePopupComponent.setMoviePopupHandler(onClosePopupClick);
 
     render(movieComponent, this.#filmsListComponentContainer.element);
   };
@@ -80,8 +79,7 @@ export default class FilmsPresenter {
     this.#renderedMoviesCount += MOVIES_CHUNK_COUNT;
 
     if(this.#renderedMoviesCount >= this.#moviesList.length) {
-      this.#showMoreButtonComponent.element.remove();
-      this.#showMoreButtonComponent.removeElement();
+      remove(this.#showMoreButtonComponent);
     }
   };
 
@@ -106,7 +104,7 @@ export default class FilmsPresenter {
     if(this.#moviesList.length > MOVIES_CHUNK_COUNT) {
       render(this.#showMoreButtonComponent, this.#filmsListComponent.element);
 
-      this.#showMoreButtonComponent.element.addEventListener('click', this.#showMoreMovies);
+      this.#showMoreButtonComponent.setLoadMoreBtnClick(this.#showMoreMovies);
     }
 
     render(this.#topRatedComponent, this.#filmsWrapperComponent.element);
