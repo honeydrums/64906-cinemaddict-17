@@ -40,8 +40,7 @@ export default class FilmsPresenter {
     const movieComponent = new FilmCardView(movie);
     const moviePopupComponent = new PopupView(movie);
 
-    const onMovieCardClick = (evt) => {
-      evt.preventDefault();
+    const onMovieCardClick = () => {
       if(this.#isPopupOpen) {
         document.querySelector('.film-details').remove();
       } else {
@@ -66,8 +65,8 @@ export default class FilmsPresenter {
       }
     }
 
-    movieComponent.element.querySelector('.film-card__link').addEventListener('click', onMovieCardClick);
-    moviePopupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', onClosePopupClick);
+    movieComponent.setMovieCardHandler(onMovieCardClick);
+    moviePopupComponent.setMoviePopupHandler(onClosePopupClick);
 
     render(movieComponent, this.#filmsListComponentContainer.element);
   };
@@ -106,7 +105,7 @@ export default class FilmsPresenter {
     if(this.#moviesList.length > MOVIES_CHUNK_COUNT) {
       render(this.#showMoreButtonComponent, this.#filmsListComponent.element);
 
-      this.#showMoreButtonComponent.element.addEventListener('click', this.#showMoreMovies);
+      this.#showMoreButtonComponent.setLoadMoreBtnClick(this.#showMoreMovies);
     }
 
     render(this.#topRatedComponent, this.#filmsWrapperComponent.element);
