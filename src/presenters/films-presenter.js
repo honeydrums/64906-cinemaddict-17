@@ -1,4 +1,4 @@
-import { render } from '../framework/render.js';
+import { render,remove } from '../framework/render.js';
 import { isEscapeKey } from '../utils.js';
 import FilmsWrapperView from '../view/films-wrapper-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
@@ -54,7 +54,7 @@ export default class FilmsPresenter {
     const onClosePopupClick = () => {
       this.#isPopupOpen = false;
       pageBody.removeAttribute('class');
-      pageBody.removeChild(moviePopupComponent.element);
+      remove(moviePopupComponent);
       document.removeEventListener('keydown', closeFromKeyboardHandler);
     };
 
@@ -79,8 +79,7 @@ export default class FilmsPresenter {
     this.#renderedMoviesCount += MOVIES_CHUNK_COUNT;
 
     if(this.#renderedMoviesCount >= this.#moviesList.length) {
-      this.#showMoreButtonComponent.element.remove();
-      this.#showMoreButtonComponent.removeElement();
+      remove(this.#showMoreButtonComponent);
     }
   };
 
