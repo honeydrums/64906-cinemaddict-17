@@ -46,8 +46,58 @@ export default class FilmCardView extends AbstractView {
     this.element.querySelector('.film-card__link').addEventListener('click', this.#clickHandler);
   };
 
+  setAddToWatchlistHandler = (callback) => {
+    this._callback.watchlistClick = callback;
+    this.element.querySelector('.film-card__controls-item--add-to-watchlist').addEventListener('click', this.#addToWatchlistHandler);
+  };
+
+  // setMovieControlsHandler = (callback) => {
+  //   this._callback.click = callback;
+  //   this.element.querySelector('.film-card__controls').addEventListener('click', this.#movieControlsHandler);
+  // };
+
   #clickHandler = (evt) => {
     evt.preventDefault();
     this._callback.click();
   };
+
+  #addToWatchlistHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchlistClick();
+  };
+
+  // #popupControlsHandler = (evt) => {
+  //   evt.preventDefault();
+  //   this._callback.toggle(evt.target); // FIXME Что записывается в toggle?
+  // };
+
+  // setEditClickHandler = (callback) => {
+  //   this._callback.editClick = callback;
+  //   this.element.querySelector('.card__btn--edit').addEventListener('click', this.#editClickHandler);
+  // };
+  //
+  // setFavoriteClickHandler = (callback) => {
+  //   this._callback.favoriteClick = callback;
+  //   this.element.querySelector('.card__btn--favorites').addEventListener('click', this.#favoriteClickHandler);
+  // };
+  //
+  // setArchiveClickHandler = (callback) => {
+  //   this._callback.archiveClick = callback;
+  //   this.element.querySelector('.card__btn--archive').addEventListener('click', this.#archiveClickHandler);
+  // };
+  //
+  // #editClickHandler = (evt) => {
+  //   evt.preventDefault();
+  //   this._callback.editClick();
+  // };
+  //
+  // #favoriteClickHandler = (evt) => {
+  //   evt.preventDefault();
+  //   this._callback.favoriteClick();
+  // };
+  //
+  // #archiveClickHandler = (evt) => {
+  //   evt.preventDefault();
+  //   this._callback.archiveClick();
+  // };
 }

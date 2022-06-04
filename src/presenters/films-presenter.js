@@ -13,9 +13,11 @@ const MOVIES_CHUNK_COUNT = 5;
 export default class FilmsPresenter {
   #EXTRA_FILMS_COUNT = 2;
 
+  #isPopupOpen = false;
   #mainContainer = null;
   #moviesModel = null;
   #moviesList = [];
+  #moviesPresenters = [];
   #renderedMoviesCount = MOVIES_CHUNK_COUNT;
 
   #filmsWrapperComponent = new FilmsWrapperView();
@@ -36,6 +38,17 @@ export default class FilmsPresenter {
     this.#moviesModel = moviesModel;
   }
 
+  #changePopupState = (popupState) => {
+    if(this.#isPopupOpen && popupState) {
+      this.#moviesPresenters.forEach((presenter) => {
+        presenter.closePopup();
+      });
+      this.#isPopupOpen = popupState;
+      return;
+    }
+    this.#isPopupOpen = popupState;
+  };
+
   #showMoreMovies = () => {
     this.#moviesList
       .slice(this.#renderedMoviesCount, this.#renderedMoviesCount + MOVIES_CHUNK_COUNT)
@@ -55,8 +68,9 @@ export default class FilmsPresenter {
   };
 
   #renderMovie = (movie, container) => {
-    const moviePresenter = new CardPresenter(movie, container);
+    const moviePresenter = new CardPresenter(movie, container, this.#changePopupState);
     moviePresenter.renderMovie();
+    this.#moviesPresenters.push(moviePresenter);
   };
 
   #renderMovies = () => {
