@@ -31,16 +31,28 @@ export default class CardPresenter {
       this.#movieComponent.setMarkAsWatchedHandler(this.#handleMarkAsWatchedClick);
       this.#movieComponent.setMarkAsFavoriteHandler(this.#handleMarkAsFavoriteClick);
 
+      this.#moviePopupComponent.setAddToWatchlistHandler(this.#handleAddToWatchlistClick);
+      this.#moviePopupComponent.setMarkAsWatchedHandler(this.#handleMarkAsWatchedClick);
+      this.#moviePopupComponent.setMarkAsFavoriteHandler(this.#handleMarkAsFavoriteClick);
+
       render(this.#movieComponent, this.#container);
     } else {
       const newComponent = new FilmCardView(movie);
+      const newPopup = new PopupView(movie);
+
       newComponent.setMovieCardHandler(this.#onOpenPopup);
       newComponent.setAddToWatchlistHandler(this.#handleAddToWatchlistClick);
       newComponent.setMarkAsWatchedHandler(this.#handleMarkAsWatchedClick);
       newComponent.setMarkAsFavoriteHandler(this.#handleMarkAsFavoriteClick);
 
+      newPopup.setAddToWatchlistHandler(this.#handleAddToWatchlistClick);
+      newPopup.setMarkAsWatchedHandler(this.#handleMarkAsWatchedClick);
+      newPopup.setMarkAsFavoriteHandler(this.#handleMarkAsFavoriteClick);
+
       replace(newComponent, this.#movieComponent);
+      replace(newPopup, this.#moviePopupComponent);
       this.#movieComponent = newComponent;
+      this.#moviePopupComponent = newPopup;
     }
   };
 
