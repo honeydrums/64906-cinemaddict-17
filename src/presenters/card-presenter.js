@@ -1,10 +1,11 @@
-import {render, remove} from '../framework/render';
+import {render, remove, replace} from '../framework/render';
 import FilmCardView from '../view/film-card-view';
 import PopupView from '../view/popup-view';
 import {isEscapeKey} from '../utils';
 
 export default class CardPresenter {
   #movie = null;
+  #updateCards = null;
   #container = null;
   #onChangePopupState = null;
   #isCurrentPopupOpen = false;
@@ -12,13 +13,36 @@ export default class CardPresenter {
   #moviePopupComponent = null;
   #pageBody = document.body;
 
-  constructor(movie, container, changePopupState) {
+  constructor(movie, updateCards, container, changePopupState) {
     this.#movie = movie;
+    this.#updateCards = updateCards;
     this.#container = container;
     this.#onChangePopupState = changePopupState;
-    this.#movieComponent = new FilmCardView(this.#movie);
-    this.#moviePopupComponent = new PopupView(this.#movie);
   }
+
+  renderMovie = (movie = this.#movie) => {
+    this.#movie = movie;
+
+    if(!this.#movieComponent) {
+      this.#movieComponent = new FilmCardView(movie);
+      this.#moviePopupComponent = new PopupView(movie);
+      this.#movieComponent.setMovieCardHandler(this.#onOpenPopup);
+      this.#movieComponent.setAddToWatchlistHandler(this.#handleAddToWatchlistClick);
+      this.#movieComponent.setMarkAsWatchedHandler(this.#handleMarkAsWatchedClick);
+      this.#movieComponent.setMarkAsFavoriteHandler(this.#handleMarkAsFavoriteClick);
+
+      render(this.#movieComponent, this.#container);
+    } else {
+      const newComponent = new FilmCardView(movie);
+      newComponent.setMovieCardHandler(this.#onOpenPopup);
+      newComponent.setAddToWatchlistHandler(this.#handleAddToWatchlistClick);
+      newComponent.setMarkAsWatchedHandler(this.#handleMarkAsWatchedClick);
+      newComponent.setMarkAsFavoriteHandler(this.#handleMarkAsFavoriteClick);
+
+      replace(newComponent, this.#movieComponent);
+      this.#movieComponent = newComponent;
+    }
+  };
 
   openPopup = () => {
     this.#isCurrentPopupOpen = true;
@@ -60,12 +84,16 @@ export default class CardPresenter {
 
   #handleAddToWatchlistClick = () => {
     this.#movie.userDetails.watchlist = !this.#movie.userDetails.watchlist;
+    this.#updateCards(this.#movie);
   };
 
-  renderMovie = () => {
-    this.#movieComponent.setMovieCardHandler(this.#onOpenPopup);
-    this.#movieComponent.setAddToWatchlistHandler(this.#handleAddToWatchlistClick);
+  #handleMarkAsWatchedClick = () => {
+    this.#movie.userDetails.alreadyWatched = !this.#movie.userDetails.alreadyWatched;
+    this.#updateCards(this.#movie);
+  };
 
-    render(this.#movieComponent, this.#container);
+  #handleMarkAsFavoriteClick = () => {
+    this.#movie.userDetails.favorite = !this.#movie.userDetails.favorite;
+    this.#updateCards(this.#movie);
   };
 }

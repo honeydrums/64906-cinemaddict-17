@@ -17,7 +17,7 @@ export default class FilmsPresenter {
   #mainContainer = null;
   #moviesModel = null;
   #moviesList = [];
-  #moviesPresenters = [];
+  #moviesPresenters = new Map();
   #renderedMoviesCount = MOVIES_CHUNK_COUNT;
 
   #filmsWrapperComponent = new FilmsWrapperView();
@@ -38,6 +38,11 @@ export default class FilmsPresenter {
     this.#moviesModel = moviesModel;
   }
 
+  init = () => {
+    this.#moviesList = this.#moviesModel.movies;
+    this.#renderMovies();
+  };
+
   #changePopupState = (popupState) => {
     if(this.#isPopupOpen && popupState) {
       this.#moviesPresenters.forEach((presenter) => {
@@ -47,6 +52,12 @@ export default class FilmsPresenter {
       return;
     }
     this.#isPopupOpen = popupState;
+  };
+
+  #updateContent = (movie) => {
+    if (this.#moviesPresenters.has(movie.id)) {
+      this.#moviesPresenters.get(movie.id).renderMovie(movie);
+    }
   };
 
   #showMoreMovies = () => {
@@ -68,9 +79,9 @@ export default class FilmsPresenter {
   };
 
   #renderMovie = (movie, container) => {
-    const moviePresenter = new CardPresenter(movie, container, this.#changePopupState);
+    const moviePresenter = new CardPresenter(movie, this.#updateContent, container, this.#changePopupState);
     moviePresenter.renderMovie();
-    this.#moviesPresenters.push(moviePresenter);
+    this.#moviesPresenters.set(movie.id, moviePresenter);
   };
 
   #renderMovies = () => {
@@ -80,7 +91,8 @@ export default class FilmsPresenter {
       return this.#renderEmptyMoviesList();
     }
 
-    for(let i = 0; i < Math.min(this.#moviesList.length, MOVIES_CHUNK_COUNT); i++) {
+    const START_FROM = this.#EXTRA_FILMS_COUNT * 2;
+    for(let i = START_FROM; i < Math.min(this.#moviesList.length, MOVIES_CHUNK_COUNT + START_FROM); i++) {
       this.#renderMovie(this.#moviesList[i], this.#filmsListComponentContainer.element);
     }
 
@@ -105,17 +117,12 @@ export default class FilmsPresenter {
   #renderMostCommentedMovies = () => {
     render(this.#mostCommentedComponent, this.#filmsWrapperComponent.element);
     render(this.#mostCommentedComponentContainer, this.#mostCommentedComponent.element);
-    for(let i = 0; i < this.#EXTRA_FILMS_COUNT; i++) {
+    for(let i = this.#EXTRA_FILMS_COUNT; i < this.#EXTRA_FILMS_COUNT * 2; i++) {
       this.#renderMovie(this.#moviesList[i], this.#mostCommentedComponentContainer.element);
     }
   };
 
   #renderEmptyMoviesList = () => {
     render(new EmptyListView(), this.#filmsListComponentContainer.element);
-  };
-
-  init = () => {
-    this.#moviesList = this.#moviesModel.movies;
-    this.#renderMovies();
   };
 }
