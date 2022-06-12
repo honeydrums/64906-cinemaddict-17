@@ -14,6 +14,7 @@ const MAX_MOVIE_SCORE = 10;
 const MOVIE_RATING_DECIMAL = 0.9;
 const MIN_MOVIE_RUNTIME = 30;
 const MAX_MOVIE_RUNTIME = 140;
+const MAX_COMMENTS_COUNT = 30;
 
 const POSTERS = [
   'made-for-each-other.png',
@@ -93,8 +94,8 @@ const DESCRIPTIONS = [
 ];
 const AGE_RATINGS = ['6+', '12+', '14+', '16+', '18+'];
 
-const generateMovieId = generateId();
-const generateCommentsId = generateId();
+const generateMovieId = generateId;
+const generateCommentsId = () => getRandomInteger(1, MAX_COMMENTS_COUNT);
 const generateMovieRating = () => getRandomInteger(MIN_MOVIE_SCORE, MAX_MOVIE_SCORE) * MOVIE_RATING_DECIMAL;
 const generateMovieRuntime = () => humanizeRuntime(getRandomInteger(MIN_MOVIE_RUNTIME, MAX_MOVIE_RUNTIME));
 const generateMovieReleaseDate = () => dayjs(generateRandomDate()).format('DD MMMM YYYY');

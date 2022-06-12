@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {nanoid} from 'nanoid';
 
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -9,10 +10,7 @@ const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const generateId = () => {
-  let counter = 0;
-  return () => ++counter;
-};
+const generateId = () => nanoid();
 
 const getOneRandomArrayElem = (array) => array[getRandomInteger(0, array.length - 1)];
 
